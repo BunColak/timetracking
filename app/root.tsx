@@ -8,33 +8,41 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
+import {
+  PreventFlashOnWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from "remix-themes";
 import "~/tailwind.css";
 import { themeSessionResolver } from "./sessions.server";
+import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import clsx from "clsx";
+import { ClerkApp, ClerkErrorBoundary } from "@clerk/remix";
 
 // Return the theme from the session storage using the loader
-export async function loader({ request }: LoaderFunctionArgs) {
-  const { getTheme } = await themeSessionResolver(request)
-  return {
-    theme: getTheme(),
-  }
+export async function loader(args) {
+  return rootAuthLoader(args, async ({ request }) => {
+    const { getTheme } = await themeSessionResolver(request);
+    return {
+      theme: getTheme(),
+    };
+  });
 }
-// Wrap your app with ThemeProvider.
-// `specifiedTheme` is the stored theme in the session storage.
-// `themeAction` is the action name that's used to change the theme in the session storage.
-export default function AppWithProviders() {
-  const data = useLoaderData<typeof loader>()
+
+export const ErrorBoundary = ClerkErrorBoundary();
+
+function AppWithProviders() {
+  const data = useLoaderData<typeof loader>();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
       <App />
     </ThemeProvider>
-  )
+  );
 }
 
 export function App() {
-  const data = useLoaderData<typeof loader>()
-  const [theme] = useTheme()
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
 
   return (
     <html lang="en" className={clsx(theme)}>
@@ -54,3 +62,5 @@ export function App() {
     </html>
   );
 }
+
+export default ClerkApp(AppWithProviders);
