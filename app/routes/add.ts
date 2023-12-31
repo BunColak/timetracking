@@ -1,7 +1,7 @@
 import {ActionFunctionArgs, json} from "@remix-run/node";
 import {getUserIdOrRedirect, getUserIdOrThrow} from "~/lib/auth";
 import {zfd} from "zod-form-data";
-import {isBefore, isPast, parse, parseISO, setHours} from "date-fns";
+import {format, isBefore, isPast, parse, parseISO, setHours} from "date-fns";
 import {db} from "~/lib/db.server";
 import {timelogs} from "~/schemas";
 
@@ -17,7 +17,7 @@ export const action = async (args: ActionFunctionArgs) => {
 
     const data = schema.parse(formData)
 
-    const validatedDate = setHours(parseISO(data.date), 12)
+    const validatedDate = parse(data.date, 'yyyy-MM-dd', new Date())
     const validatedStartTime = parse(data.startTime, 'HH:mm', validatedDate)
     const validatedEndTime = parse(data.endTime, 'HH:mm', validatedDate)
 
@@ -29,7 +29,7 @@ export const action = async (args: ActionFunctionArgs) => {
         startTime: validatedStartTime,
         endTime: validatedEndTime,
         userId: userId,
-        date: validatedDate.toISOString(),
+        date: format(validatedDate, 'yyyy-MM-dd'),
     })
 
     return json({message: 'Success.'})

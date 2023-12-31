@@ -4,7 +4,7 @@ import {Separator} from "~/components/ui/separator";
 import {Table, TableBody, TableCell, TableFooter, TableRow,} from "~/components/ui/table";
 import {RedirectToSignIn, SignedIn, SignedOut} from "@clerk/remix";
 import {db} from "~/lib/db.server";
-import {useLoaderData} from "@remix-run/react";
+import {Link, useLoaderData} from "@remix-run/react";
 import {
     eachWeekOfInterval,
     endOfMonth,
@@ -96,7 +96,9 @@ export default function Index() {
                 <Card>
                     <CardHeader>
                         <div className="flex justify-between gap-6">
-                            <CardTitle>Timesheet</CardTitle>
+                            <CardTitle>
+                                <Link to="/">Timelogs</Link>
+                            </CardTitle>
                             <MonthPicker/>
                         </div>
                         <CardDescription>

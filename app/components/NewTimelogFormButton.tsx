@@ -11,9 +11,8 @@ import {Button} from "~/components/ui/button";
 import {Plus} from "lucide-react";
 import {Label} from "~/components/ui/label";
 import {Input} from "~/components/ui/input";
-import {Calendar} from "~/components/ui/calendar";
 import {DatePicker} from "~/components/DatePicker";
-import {Form, useFetcher} from "@remix-run/react";
+import {useFetcher} from "@remix-run/react";
 import {cn} from "~/lib/utils";
 
 type NewTimelogFormButtonProps = {
