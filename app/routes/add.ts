@@ -17,9 +17,9 @@ export const action = async (args: ActionFunctionArgs) => {
 
     const data = schema.parse(formData)
 
-    const validatedDate = parse(data.date, 'yyyy-MM-dd', new Date())
-    const validatedStartTime = parse(data.startTime, 'HH:mm', validatedDate)
-    const validatedEndTime = parse(data.endTime, 'HH:mm', validatedDate)
+    const validatedDate = parseISO(data.date, {additionalDigits: 1})
+    const validatedStartTime = parse(data.startTime, 'kk:mm', validatedDate)
+    const validatedEndTime = parse(data.endTime, 'kk:mm', validatedDate)
 
     if (isBefore(validatedEndTime, validatedStartTime)) {
         return json({startTime: 'Start time must be before end time.'}, {status: 400})
