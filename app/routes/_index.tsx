@@ -33,6 +33,9 @@ import { and, desc, eq, gte, lte } from "drizzle-orm";
 import { Timelog, timelogs } from "~/schemas";
 import { TimelogItem } from "~/components/TimelogItem";
 import { TimelogWeekSummary } from "~/components/TimelogWeekSummary";
+import {useState} from "react";
+import {MonthPicker} from "~/components/MonthPicker";
+import {convertSearchParamToDate, useMonthValue} from "~/lib/hooks/useMonthValue";
 
 export const meta: MetaFunction = () => {
   return [
@@ -48,7 +51,8 @@ const data = {
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const userId = await getUserIdOrRedirect(args);
-  const currentDate = new Date();
+  const url = new URL(args.request.url);
+  const currentDate = convertSearchParamToDate(url.searchParams)
 
   const startOfTheMonth = startOfMonth(currentDate);
   const endOfTheMonth = endOfMonth(currentDate);
@@ -87,28 +91,38 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { data } = useLoaderData<typeof loader>();
-  const currentDate = new Date();
+  const totalMilliseconds = Object.keys(data).reduce((accumulator, week) => {
+    const totalMilliseconds = data[week].reduce(
+      (accumulator, item) =>
+        accumulator +
+        (new Date(item.endTime).getTime() - new Date(item.startTime).getTime()),
+      0
+    );
+
+    return accumulator + totalMilliseconds;
+  }, 0);
+
+  const currentDate = useMonthValue()
 
   return (
     <div className="container mt-4">
       <SignedIn>
         <Card>
           <CardHeader>
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-6">
               <CardTitle>Timesheet</CardTitle>
-              <Button size="sm">Change Month</Button>
+              <MonthPicker />
             </div>
             <CardDescription>
-              {format(currentDate, "LLLL")}: 14hrs
+              {format(currentDate, "LLLL")}: {millisecondsToHours(totalMilliseconds)} hrs
             </CardDescription>
           </CardHeader>
           <CardContent>
             {Object.keys(data).map((week) => {
               return (
-                <div>
+                <div key={week}>
                   <h4
                     className="scroll-m-20 text-xl font-semibold tracking-tight"
-                    key={week}
                   >
                     Week {getWeek(new Date(week))}
                   </h4>
@@ -133,12 +147,9 @@ export default function Index() {
               );
             })}
             <Separator className="mt-2 my-4" />
-            <div className="flex justify-between items-center">
-              <Button size="sm" variant="default">
-                <Plus className="mr-2 h-4 w-4" /> Add Week
-              </Button>
+            <div className="flex justify-end items-center">
               <small className="text-end text-sm font-bold leading-none">
-                Total: 70 hrs
+                Total: {millisecondsToHours(totalMilliseconds)} hours
               </small>
             </div>
           </CardContent>

@@ -27,8 +27,7 @@ export const TimelogWeekSummary: React.FC<TimelogWeekSummaryProps> = ({
 
   return (
     <TableCell colSpan={2} className="text-end text-secondary-foreground">
-      <span>Total:</span>
-      <span className="ml-1">{millisecondsToHours(totalMilliseconds)} hrs</span>
+      <span>{millisecondsToHours(totalMilliseconds)} hours</span>
     </TableCell>
   );
 };

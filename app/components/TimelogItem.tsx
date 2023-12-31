@@ -19,7 +19,7 @@ export const TimelogItem: React.FC<TimelogItemProps> = ({ item }) => {
       <TableCell>
         {format(startTime, "HH:mm")} - {format(endTime, "HH:mm")}
       </TableCell>
-      <TableCell>{formatDistanceStrict(startTime, endTime)}</TableCell>
+      <TableCell align="right">{formatDistanceStrict(startTime, endTime)}</TableCell>
     </TableRow>
   );
 };
