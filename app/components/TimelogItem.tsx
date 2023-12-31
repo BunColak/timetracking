@@ -1,6 +1,6 @@
 import React from "react";
 import {TableCell, TableRow} from "~/components/ui/table";
-import {format, formatDistanceStrict, parse} from "date-fns";
+import {format, interval, intervalToDuration, parse} from "date-fns";
 import {Timelog} from "~/schemas";
 import {Jsonify} from "type-fest";
 import {
@@ -13,6 +13,7 @@ import {
     AlertDialogTitle,
 } from "~/components/ui/alert-dialog"
 import {useFetcher} from "@remix-run/react";
+import {formatStartEnd} from "~/lib/utils";
 
 type TimelogItemProps = {
     item: Jsonify<Timelog>;
@@ -50,7 +51,7 @@ export const TimelogItem: React.FC<TimelogItemProps> = ({item}) => {
                 <TableCell>
                     {format(startTime, "HH:mm")} - {format(endTime, "HH:mm")}
                 </TableCell>
-                <TableCell align="right">{formatDistanceStrict(startTime, endTime)}</TableCell>
+                <TableCell align="right">{formatStartEnd(startTime, endTime)}</TableCell>
             </TableRow> : null}
         </>
     );

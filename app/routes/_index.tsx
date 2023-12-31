@@ -10,7 +10,7 @@ import {
     endOfMonth,
     format, formatISO,
     getWeek,
-    millisecondsToHours, parse,
+    parse,
     startOfMonth,
     startOfWeek,
 } from "date-fns";
@@ -22,6 +22,7 @@ import {TimelogWeekSummary} from "~/components/TimelogWeekSummary";
 import {MonthPicker} from "~/components/MonthPicker";
 import {convertSearchParamToDate, useMonthValue} from "~/lib/hooks/useMonthValue";
 import {NewTimelogFormButton} from "~/components/NewTimelogFormButton";
+import {formatMilliseconds} from "~/lib/utils";
 
 export const meta: MetaFunction = () => {
     return [
@@ -103,7 +104,7 @@ export default function Index() {
                             <MonthPicker/>
                         </div>
                         <CardDescription>
-                            {format(currentDate, "LLLL")}: {millisecondsToHours(totalMilliseconds)} hrs
+                            {format(currentDate, "LLLL")}: {formatMilliseconds(totalMilliseconds)}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -137,7 +138,7 @@ export default function Index() {
                         <Separator className="mt-2 my-4"/>
                         <div className="flex justify-end items-center">
                             <small className="text-end text-sm font-bold leading-none">
-                                Total: {millisecondsToHours(totalMilliseconds)} hours
+                                Total: {formatMilliseconds(totalMilliseconds)}
                             </small>
                         </div>
                     </CardContent>
