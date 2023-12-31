@@ -47,14 +47,14 @@ export const NewTimelogFormButton: React.FC<NewTimelogFormButtonProps> = ({weekS
                     </div>
                     <div className='space-y-2'>
                         <Label htmlFor="startTime">Start Time</Label>
-                        <Input type='time' name='startTime' id='endTime' required/>
+                        <Input className='w-full' type='time' name='startTime' id='endTime' required/>
                         <p className={cn("text-[0.8rem] text-destructive hidden", {'block': fetcher.data?.startTime})}>
                             {fetcher.data?.startTime}
                         </p>
                     </div>
                     <div className='space-y-2'>
                         <Label htmlFor="endTime">End Time</Label>
-                        <Input type='time' name='endTime' id='endTime' required/>
+                        <Input className='w-full' type='time' name='endTime' id='endTime' required />
                     </div>
                     <Button type='submit' className='w-full' disabled={fetcher.state === 'submitting'}>
                         Save
