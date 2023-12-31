@@ -10,7 +10,7 @@ import {
     endOfMonth,
     format, formatISO,
     getWeek,
-    millisecondsToHours,
+    millisecondsToHours, parse,
     startOfMonth,
     startOfWeek,
 } from "date-fns";
@@ -82,7 +82,7 @@ export default function Index() {
         const totalMilliseconds = data[week].reduce(
             (accumulator, item) =>
                 accumulator +
-                (new Date(item.endTime).getTime() - new Date(item.startTime).getTime()),
+                (parse(item.endTime, 'kk:mm', new Date()).getTime() - parse(item.startTime, 'kk:mm', new Date()).getTime()),
             0
         );
 

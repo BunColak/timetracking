@@ -1,5 +1,5 @@
 import React from "react";
-import { millisecondsToHours } from "date-fns";
+import {millisecondsToHours, parse} from "date-fns";
 import { TableCell } from "~/components/ui/table";
 import { Timelog } from "~/schemas";
 import { JsonifyObject } from "type-fest/source/jsonify";
@@ -19,8 +19,8 @@ export const TimelogWeekSummary: React.FC<TimelogWeekSummaryProps> = ({
     (accumulator, item) =>
       accumulator +
       getDifferenceInMilliseconds(
-        new Date(item.startTime),
-        new Date(item.endTime)
+          parse(item.startTime, 'kk:mm', new Date()),
+          parse(item.endTime, 'kk:mm', new Date())
       ),
     0
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import {TableCell, TableRow} from "~/components/ui/table";
-import {format, formatDistanceStrict} from "date-fns";
+import {format, formatDistanceStrict, parse} from "date-fns";
 import {Timelog} from "~/schemas";
 import {Jsonify} from "type-fest";
 import {
@@ -21,8 +21,8 @@ type TimelogItemProps = {
 export const TimelogItem: React.FC<TimelogItemProps> = ({item}) => {
     const [showDelete, setShowDelete] = React.useState(false);
     const date = new Date(item.date);
-    const startTime = new Date(item.startTime);
-    const endTime = new Date(item.endTime);
+    const startTime = parse(item.startTime, 'kk:mm', date)
+    const endTime = parse(item.endTime, 'kk:mm', date)
     const fetcher = useFetcher()
 
     const handleDelete = () => {

@@ -25,14 +25,12 @@ export const action = async (args: ActionFunctionArgs) => {
         return json({startTime: 'Start time must be before end time.'}, {status: 400})
     }
 
-    const a = await db.insert(timelogs).values({
-        startTime: validatedStartTime,
-        endTime: validatedEndTime,
+    await db.insert(timelogs).values({
+        startTime: data.startTime,
+        endTime: data.endTime,
         userId: userId,
         date: data.date,
     })
-
-    console.log(a)
 
     return json({message: 'Success.'})
 }

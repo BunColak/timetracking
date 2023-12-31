@@ -1,10 +1,10 @@
-import { date, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { date, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { InferSelectModel } from "drizzle-orm";
 
 export const timelogs = pgTable("timelogs", {
   id: serial("id").primaryKey(),
-  startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time").notNull(),
+  startTime: varchar("start_time").notNull(),
+  endTime: varchar("end_time").notNull(),
   date: date("date").notNull(),
   userId: varchar("user_id").notNull(),
 });
