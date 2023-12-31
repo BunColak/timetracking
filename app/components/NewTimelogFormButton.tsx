@@ -28,7 +28,7 @@ export const NewTimelogFormButton: React.FC<NewTimelogFormButtonProps> = ({weekS
         if (fetcher.data?.message === 'Success.') {
             setOpen(false)
         }
-    })
+    }, [fetcher.data?.message])
 
     return <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
