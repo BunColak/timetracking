@@ -20,8 +20,8 @@ export const TimelogWeekSummary: React.FC<TimelogWeekSummaryProps> = ({
         (accumulator, item) =>
             accumulator +
             getDifferenceInMilliseconds(
-                parse(item.startTime, 'kk:mm', new Date()),
-                parse(item.endTime, 'kk:mm', new Date())
+                new Date(`1970-01-01T${item.startTime}`),
+                new Date(`1970-01-01T${item.endTime}`)
             ),
         0
     );

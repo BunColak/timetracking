@@ -22,8 +22,8 @@ type TimelogItemProps = {
 export const TimelogItem: React.FC<TimelogItemProps> = ({item}) => {
     const [showDelete, setShowDelete] = React.useState(false);
     const date = new Date(item.date);
-    const startTime = parse(item.startTime, 'kk:mm', date)
-    const endTime = parse(item.endTime, 'kk:mm', date)
+    const startTime = new Date(`1970-01-01T${item.startTime}`)
+    const endTime = new Date(`1970-01-01T${item.endTime}`)
     const fetcher = useFetcher()
 
     const handleDelete = () => {

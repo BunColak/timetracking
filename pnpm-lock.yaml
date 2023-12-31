@@ -59,6 +59,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.29.2
     version: 0.29.2(@types/react@18.2.38)(expo-sqlite@13.2.0)(pg@8.11.3)(postgres@3.4.3)(react@18.2.0)
+  humanize-duration:
+    specifier: ^3.31.0
+    version: 3.31.0
   isbot:
     specifier: ^3.6.8
     version: 3.7.1
@@ -109,6 +112,9 @@ devDependencies:
   '@remix-run/eslint-config':
     specifier: ^2.3.0
     version: 2.3.0(eslint@8.54.0)(react@18.2.0)(typescript@5.3.2)
+  '@types/humanize-duration':
+    specifier: ^3.27.3
+    version: 3.27.3
   '@types/react':
     specifier: ^18.2.20
     version: 18.2.38
@@ -4099,6 +4105,10 @@ packages:
       '@types/unist': 2.0.10
     dev: true
 
+  /@types/humanize-duration@3.27.3:
+    resolution: {integrity: sha512-wiiiFYjnrYDJE/ujU7wS/NShqp12IKrejozjDtcejP0zYi+cjyjVcfZHwcFUDKVJ7tHGsmgeW2ED92ABIIjfpg==}
+    dev: true
+
   /@types/istanbul-lib-coverage@2.0.6:
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
     dev: false
@@ -7330,6 +7340,10 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
     dev: true
+
+  /humanize-duration@3.31.0:
+    resolution: {integrity: sha512-fRrehgBG26NNZysRlTq1S+HPtDpp3u+Jzdc/d5A4cEzOD86YLAkDaJyJg8krSdCi7CJ+s7ht3fwRj8Dl+Btd0w==}
+    dev: false
 
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}

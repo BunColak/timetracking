@@ -6,6 +6,7 @@ import {RedirectToSignIn, SignedIn, SignedOut} from "@clerk/remix";
 import {db} from "~/lib/db.server";
 import {Link, useLoaderData} from "@remix-run/react";
 import {
+    differenceInMilliseconds,
     eachWeekOfInterval,
     endOfMonth,
     format, formatISO,
@@ -83,7 +84,7 @@ export default function Index() {
         const totalMilliseconds = data[week].reduce(
             (accumulator, item) =>
                 accumulator +
-                (parse(item.endTime, 'kk:mm', new Date()).getTime() - parse(item.startTime, 'kk:mm', new Date()).getTime()),
+                differenceInMilliseconds(new Date(`1970-01-01T${item.endTime}`),new Date(`1970-01-01T${item.startTime}`)),
             0
         );
 
