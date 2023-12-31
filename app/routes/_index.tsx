@@ -8,7 +8,7 @@ import {Link, useLoaderData} from "@remix-run/react";
 import {
     eachWeekOfInterval,
     endOfMonth,
-    format,
+    format, formatISO,
     getWeek,
     millisecondsToHours,
     startOfMonth,
@@ -42,6 +42,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
     const startOfTheMonth = startOfMonth(currentDate);
     const endOfTheMonth = endOfMonth(currentDate);
+
     const weeks = eachWeekOfInterval(
         {start: startOfTheMonth, end: endOfTheMonth},
         {weekStartsOn: 1}
@@ -53,8 +54,8 @@ export const loader = async (args: LoaderFunctionArgs) => {
         .where(
             and(
                 eq(timelogs.userId, userId),
-                gte(timelogs.startTime, startOfTheMonth),
-                lte(timelogs.endTime, endOfTheMonth)
+                gte(timelogs.date, formatISO(startOfTheMonth)),
+                lte(timelogs.date, formatISO(endOfTheMonth))
             )
         )
         .orderBy(asc(timelogs.date));
@@ -62,14 +63,14 @@ export const loader = async (args: LoaderFunctionArgs) => {
     const groupedData: Record<string, Timelog[]> = {};
 
     weeks.forEach((week) => {
-        groupedData[startOfWeek(week, {weekStartsOn: 1}).toISOString()] = [];
+        groupedData[formatISO(startOfWeek(week, {weekStartsOn: 1}))] = [];
     });
 
     data.forEach((item) => {
         const date = new Date(item.date);
         const week = startOfWeek(date, {weekStartsOn: 1});
 
-        groupedData[week.toISOString()].push(item);
+        groupedData[formatISO(week)].push(item);
     });
 
     return json({data: groupedData});

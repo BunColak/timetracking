@@ -14,18 +14,20 @@ type DatePickerProps = {
 
 export const DatePicker: React.FC<DatePickerProps> = ({defaultValue, name}) => {
     const [date, setDate] = useState<Date>(defaultValue)
+    const [open, setOpen] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>(format(defaultValue, 'yyyy-MM-dd'))
 
     const handleDaySelect: SelectSingleEventHandler = (date) => {
         if (date) {
             setDate(date);
-            setInputValue(formatISO(date))
+            setInputValue(format(date, 'yyyy-MM-dd'))
+            setOpen(false);
         }
     }
 
     return <div>
         <input name={name || 'date'} hidden value={inputValue}/>
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
                     variant={"outline"}

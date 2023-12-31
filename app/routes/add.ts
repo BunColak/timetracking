@@ -1,7 +1,7 @@
 import {ActionFunctionArgs, json} from "@remix-run/node";
 import {getUserIdOrRedirect, getUserIdOrThrow} from "~/lib/auth";
 import {zfd} from "zod-form-data";
-import {addHours, format, isBefore, isPast, parse, parseISO, setHours} from "date-fns";
+import {format, isBefore, isPast, parse, parseISO, setHours} from "date-fns";
 import {db} from "~/lib/db.server";
 import {timelogs} from "~/schemas";
 
@@ -17,20 +17,22 @@ export const action = async (args: ActionFunctionArgs) => {
 
     const data = schema.parse(formData)
 
-    const validatedDate = addHours(parseISO(data.date, {additionalDigits: 1}), 10)
-    const validatedStartTime = parse(data.startTime, 'kk:mm', validatedDate)
+    const validatedDate = parse(data.date, 'yyyy-mm-dd', new Date())
+    const validatedStartTime = parse(data.startTime, 'hh:mm', validatedDate)
     const validatedEndTime = parse(data.endTime, 'kk:mm', validatedDate)
 
     if (isBefore(validatedEndTime, validatedStartTime)) {
         return json({startTime: 'Start time must be before end time.'}, {status: 400})
     }
 
-    await db.insert(timelogs).values({
+    const a = await db.insert(timelogs).values({
         startTime: validatedStartTime,
         endTime: validatedEndTime,
         userId: userId,
-        date: format(validatedDate, 'yyyy-MM-dd'),
+        date: data.date,
     })
+
+    console.log(a)
 
     return json({message: 'Success.'})
 }
