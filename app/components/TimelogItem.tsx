@@ -38,11 +38,11 @@ export const TimelogItem: React.FC<TimelogItemProps> = ({item}) => {
                 <AlertDialog open={showDelete} onOpenChange={setShowDelete}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogTitle>Delete item?</AlertDialogTitle>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+                            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
