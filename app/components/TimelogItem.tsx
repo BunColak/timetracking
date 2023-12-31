@@ -45,7 +45,7 @@ export const TimelogItem: React.FC<TimelogItemProps> = ({item}) => {
                     </AlertDialogContent>
                 </AlertDialog>
             </fetcher.Form>
-            {fetcher.state === 'idle' ? <TableRow className="bg-gray-100" onClick={() => setShowDelete(true)}>
+            {fetcher.state === 'idle' ? <TableRow className="bg-accent text-accent-foreground" onClick={() => setShowDelete(true)}>
                 <TableCell>{format(date, "EEEE - dd/MM")}</TableCell>
                 <TableCell>
                     {format(startTime, "HH:mm")} - {format(endTime, "HH:mm")}

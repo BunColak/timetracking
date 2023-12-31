@@ -20,7 +20,7 @@ import clsx from "clsx";
 import { ClerkApp, ClerkErrorBoundary } from "@clerk/remix";
 
 // Return the theme from the session storage using the loader
-export async function loader(args) {
+export async function loader(args: LoaderFunctionArgs) {
   return rootAuthLoader(args, async ({ request }) => {
     const { getTheme } = await themeSessionResolver(request);
     return {
@@ -53,7 +53,7 @@ export function App() {
         <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
       </head>
-      <body className="bg-gray-50">
+      <body className="bg-background">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
